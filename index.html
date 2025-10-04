@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chúc Trung Thu</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at bottom, #0d1b2a, #1b263b, #000);
+      color: white;
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      position: relative;
+    }
+    h1, p {
+      position: relative;
+      z-index: 100; /* chữ luôn trên cùng */
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+      color: #ff9ff3;
+      text-shadow: 0 0 15px #ff6ec7, 0 0 30px hotpink;
+    }
+    p {
+      font-size: 1.4em;
+      margin: 15px;
+      color: #f8a5c2;
+      text-shadow: 0 0 10px #ff9ff3;
+    }
+    .heart {
+      color: #ff4d6d;
+      font-size: 2.5em;
+      animation: pulse 1.5s infinite;
+      text-shadow: 0 0 15px red;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+      100% { transform: scale(1); }
+    }
+
+    /* Mặt trăng */
+    .moon {
+      position: absolute;
+      top: 50px;
+      right: 80px;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: #fff8dc;
+      box-shadow: 0 0 60px 25px #fffacd, 0 0 100px #fff;
+      z-index: 1;
+    }
+
+    /* Lồng đèn */
+    .lantern {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      border-radius: 12px;
+      border: 3px solid gold;
+      box-shadow: 0 0 15px gold, 0 0 25px yellow;
+      animation: flyLantern linear infinite;
+      z-index: 2; /* ở dưới chữ nhưng trên nền */
+    }
+    .lantern::before {
+      content: '';
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      width: 2px;
+      height: 18px;
+      background: gold;
+      transform: translateX(-50%);
+    }
+    @keyframes flyLantern {
+      from { left: -120px; }
+      to { left: 110%; }
+    }
+
+    /* Sao */
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+      box-shadow: 0 0 10px white;
+      z-index: 0;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(2); }
+    }
+
+    /* Hạt pháo hoa */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <!-- Trang trí -->
+  <div class="moon"></div>
+
+  <!-- JS hiệu ứng -->
+  <script>
+    // Lồng đèn
+    function createLantern() {
+      let lantern = document.createElement("div");
+      lantern.className = "lantern";
+      lantern.style.top = Math.random() * window.innerHeight * 0.7 + "px";
+      lantern.style.background = ["#ff7675", "#74b9ff", "#55efc4", "#ffeaa7", "#fd79a8"][Math.floor(Math.random()*5)];
+      let duration = 10 + Math.random() * 10;
+      lantern.style.animationDuration = duration + "s";
+      document.body.appendChild(lantern);
+      setTimeout(() => lantern.remove(), duration * 1000);
+    }
+    setInterval(createLantern, 1000);
+
+    // Sao
+    for (let i = 0; i < 50; i++) {
+      let star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (1 + Math.random()*2) + "s";
+      document.body.appendChild(star);
+    }
+
+    // Pháo hoa bung nổ
+    function createFirework() {
+      let x = Math.random() * window.innerWidth;
+      let y = Math.random() * (window.innerHeight * 0.5);
+
+      for (let i = 0; i < 30; i++) {
+        let particle = document.createElement("div");
+        particle.className = "particle";
+        document.body.appendChild(particle);
+
+        let angle = Math.random() * 2 * Math.PI;
+        let radius = Math.random() * 120;
+        let dx = Math.cos(angle) * radius;
+        let dy = Math.sin(angle) * radius;
+
+        let color = ["#ff7675", "#74b9ff", "#55efc4", "#ffeaa7", "#fd79a8", "#e17055", "#a29bfe"][Math.floor(Math.random()*7)];
+        particle.style.background = color;
+        particle.style.left = x + "px";
+        particle.style.top = y + "px";
+
+        particle.animate([
+          { transform: "translate(0,0)", opacity: 1 },
+          { transform: `translate(${dx}px, ${dy}px)`, opacity: 0 }
+        ], {
+          duration: 1500 + Math.random() * 1000,
+          easing: "ease-out"
+        });
+
+        setTimeout(() => particle.remove(), 2000);
+      }
+    }
+    setInterval(createFirework, 2000);
+  </script>
+
+  <!-- Nội dung chúc -->
+  <h1>🌕 Chúc Bé Yêu Liên Trung Thu Vui Vẻ 🌕</h1>
+  <p>Trong đêm trăng tròn này, anh chỉ muốn nói rằng:<br>
+  <span class="heart">❤️</span> Anh yêu em rất nhiều <span class="heart">❤️</span></p>
+  <p>Chúc em luôn hạnh phúc, rạng rỡ như ánh trăng, và mãi ở bên anh nhé! ✨</p>
+  <p style="margin-top:50px; font-style:italic; font-size:1.4em; color:hotpink; text-shadow:0 0 15px hotpink;">
+    — Gửi đến bé yêu của anh: Liên 💕<br>
+    <b>Ký tên: Nguyên</b>
+  </p>
+</body>
+</html>
